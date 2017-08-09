@@ -1,6 +1,7 @@
 package com.qinchy.weixin4jdemo.schedule;
 
 import com.qinchy.weixin4jdemo.common.HttpUtils;
+import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -46,13 +47,15 @@ public class AccessTokenSchedule {
         String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="
                 + Configuration.getProperty("weixin4j.oauth.appid") + "&secret=" + Configuration.getProperty("weixin4j.oauth.secret");
 
-        String accessToken = HttpUtils.get(url, null, "UTF-8");
+        String rtnMsg = HttpUtils.get(url, null, "UTF-8");
+        JSONObject jsonObject = JSONObject.fromObject(rtnMsg);
+        String token = jsonObject.getString("access_token");
 
         if (Configuration.isDebug()) {
-            log.debug("access_token = " + accessToken);
+            log.debug("access_token = " + token);
         }
 
-        setAccessToken(accessToken);
+        setAccessToken(token);
     }
 
     public static void main(String[] args) {

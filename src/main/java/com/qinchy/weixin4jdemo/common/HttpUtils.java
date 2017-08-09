@@ -140,7 +140,9 @@ public class HttpUtils {
             //执行getMethod
             int statusCode = client.executeMethod(getMethod);
             if (statusCode == HttpStatus.SC_OK) {
+                log.debug("ResponseCharSet="+getMethod.getResponseCharSet());
                 response = getMethod.getResponseBodyAsString();
+                response = new String(response.getBytes("ISO-8859-1"),"UTF-8");
             } else {
                 log.debug("响应状态码 = " + getMethod.getStatusCode());
             }
