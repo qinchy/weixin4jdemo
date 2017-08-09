@@ -11,6 +11,23 @@ public class AccessTokenSchedule {
 
     private Logger log = LoggerFactory.getLogger(AccessTokenSchedule.class);
 
+    private static AccessTokenSchedule instance = null;
+
+    private AccessTokenSchedule() {
+
+    }
+
+    public static AccessTokenSchedule getInstance() {
+        if (null == instance) {
+            synchronized (AccessTokenSchedule.class) {
+                if (null == instance) {
+                    instance = new AccessTokenSchedule();
+                }
+            }
+        }
+        return instance;
+    }
+
     private String accessToken;
 
     private void setAccessToken(String accessToken) {
@@ -25,7 +42,7 @@ public class AccessTokenSchedule {
     }
 
     @Scheduled(cron = "0 0 0/1 * * ? ")
-    public void retrieveAccessToken() {
+    private void retrieveAccessToken() {
         String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="
                 + Configuration.getProperty("weixin4j.oauth.appid") + "&secret=" + Configuration.getProperty("weixin4j.oauth.secret");
 
@@ -38,4 +55,7 @@ public class AccessTokenSchedule {
         setAccessToken(accessToken);
     }
 
+    public static void main(String[] args) {
+        System.out.println(AccessTokenSchedule.getInstance().getAccessToken());
+    }
 }

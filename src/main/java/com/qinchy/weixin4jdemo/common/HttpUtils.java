@@ -124,11 +124,11 @@ public class HttpUtils {
         strtTotalURL.append(url);
 
         String paramStr = getUrl(params, enc);
-        if(StringUtils.isNotBlank(paramStr)){
+        if (StringUtils.isNotBlank(paramStr)) {
             if (strtTotalURL.indexOf("?") == -1) {
-                strtTotalURL.append("?").append(getUrl(params, enc));
+                strtTotalURL.append("?").append(paramStr);
             } else {
-                strtTotalURL.append("&").append(getUrl(params, enc));
+                strtTotalURL.append("&").append(paramStr);
             }
         }
 
@@ -146,10 +146,8 @@ public class HttpUtils {
             }
         } catch (HttpException e) {
             log.error("发生致命的异常，可能是协议不对或者返回的内容有问题", e);
-            e.printStackTrace();
         } catch (IOException e) {
             log.error("发生网络异常", e);
-            e.printStackTrace();
         } finally {
             if (getMethod != null) {
                 getMethod.releaseConnection();
@@ -182,7 +180,7 @@ public class HttpUtils {
                 try {
                     str = URLEncoder.encode(str, valueEnc);
                 } catch (UnsupportedEncodingException e) {
-                    e.printStackTrace();
+                    log.error("不支持的编码方式", e);
                 }
                 url.append(key).append("=").append(str).append(URL_PARAM_CONNECT_FLAG);
             }
