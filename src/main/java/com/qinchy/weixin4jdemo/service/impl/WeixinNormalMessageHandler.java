@@ -21,8 +21,14 @@ public class WeixinNormalMessageHandler extends DefaultNormalMessageHandler {
             content = " 位置信息："+((LocationInputMessage)msg).getLabel();
         }else if(msg instanceof LinkInputMessage){
             content = " 消息内容："+((LinkInputMessage)msg).getDescription();
-        }else{
+        }else if(msg instanceof ShortVideoInputMessage){
             content = " mediaId："+((ShortVideoInputMessage)msg).getMediaId();
+        }else if(msg instanceof ImageInputMessage){
+            content = " mediaId："+((ImageInputMessage)msg).getMediaId();
+        }else if(msg instanceof VoiceInputMessage){
+            content = " mediaId："+((VoiceInputMessage)msg).getMediaId();
+        }else if(msg instanceof VideoInputMessage){
+            content = " mediaId："+((VideoInputMessage)msg).getMediaId();
         }
         out.setContent("你的消息已经收到！消息类型是：" + msg.getMsgType() + content);
         return out;
