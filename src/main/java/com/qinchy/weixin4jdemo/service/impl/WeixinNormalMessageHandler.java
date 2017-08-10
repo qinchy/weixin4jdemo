@@ -14,7 +14,17 @@ public class WeixinNormalMessageHandler extends DefaultNormalMessageHandler {
 
     private OutputMessage allType(NormalMessage msg) {
         TextOutputMessage out = new TextOutputMessage();
-        out.setContent("你的消息已经收到！消息类型是：" + msg.getMsgType() + " 消息Id：" + msg.getMsgId());
+        String content="";
+        if(msg instanceof TextInputMessage){
+            content = " 消息内容："+((TextInputMessage)msg).getContent();
+        }else if(msg instanceof LocationInputMessage){
+            content = " 位置信息："+((LocationInputMessage)msg).getLabel();
+        }else if(msg instanceof LinkInputMessage){
+            content = " 消息内容："+((LinkInputMessage)msg).getDescription();
+        }else{
+            content = " mediaId："+((ShortVideoInputMessage)msg).getMediaId();
+        }
+        out.setContent("你的消息已经收到！消息类型是：" + msg.getMsgType() + content);
         return out;
     }
 
@@ -52,6 +62,9 @@ public class WeixinNormalMessageHandler extends DefaultNormalMessageHandler {
 
     @Override
     public OutputMessage shortvideoTypeMsg(ShortVideoInputMessage msg) {
+        if (Configuration.isDebug()) {
+            log.debug("收到短视频消息：" + msg.getMediaId());
+        }
         return allType(msg);
     }
 

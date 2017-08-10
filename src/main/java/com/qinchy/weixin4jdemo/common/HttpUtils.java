@@ -6,6 +6,7 @@ import org.apache.commons.httpclient.HttpStatus;
 import org.apache.commons.httpclient.MultiThreadedHttpConnectionManager;
 import org.apache.commons.httpclient.methods.GetMethod;
 import org.apache.commons.httpclient.methods.PostMethod;
+import org.apache.commons.httpclient.methods.StringRequestEntity;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -25,16 +26,6 @@ import java.util.Set;
 public class HttpUtils {
 
     private static Logger log = LoggerFactory.getLogger(HttpUtils.class);
-
-    /**
-     * 定义编码格式 UTF-8
-     */
-    public static final String URL_PARAM_DECODECHARSET_UTF8 = "UTF-8";
-
-    /**
-     * 定义编码格式 GBK
-     */
-    public static final String URL_PARAM_DECODECHARSET_GBK = "GBK";
 
     private static final String URL_PARAM_CONNECT_FLAG = "&";
 
@@ -83,6 +74,48 @@ public class HttpUtils {
                 String value = params.get(key);
                 postMethod.addParameter(key, value);
             }
+            //执行postMethod
+            int statusCode = client.executeMethod(postMethod);
+            if (statusCode == HttpStatus.SC_OK) {
+                response = postMethod.getResponseBodyAsString();
+                response = new String(response.getBytes("ISO-8859-1"),"UTF-8");
+            } else {
+                log.error("响应状态码 = " + postMethod.getStatusCode());
+            }
+        } catch (HttpException e) {
+            log.error("发生致命的异常，可能是协议不对或者返回的内容有问题", e);
+            e.printStackTrace();
+        } catch (IOException e) {
+            log.error("发生网络异常", e);
+            e.printStackTrace();
+        } finally {
+            if (postMethod != null) {
+                postMethod.releaseConnection();
+                postMethod = null;
+            }
+        }
+
+        return response;
+    }
+
+    /**
+     * POST方式提交数据
+     *
+     * @param url    待请求的URL
+     * @param params 要提交的数据
+     * @param enc    编码
+     * @return 响应结果
+     * @throws IOException IO异常
+     */
+    public static String post(String url, String params, String enc) {
+
+        String response = EMPTY;
+        PostMethod postMethod = null;
+        try {
+            postMethod = new PostMethod(url);
+            postMethod.setRequestHeader("Content-Type", "application/json;charset=" + enc);
+            StringRequestEntity sre = new StringRequestEntity(params,"application/json","UTF-8");
+            postMethod.setRequestEntity(sre);
             //执行postMethod
             int statusCode = client.executeMethod(postMethod);
             if (statusCode == HttpStatus.SC_OK) {
