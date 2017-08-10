@@ -87,6 +87,7 @@ public class HttpUtils {
             int statusCode = client.executeMethod(postMethod);
             if (statusCode == HttpStatus.SC_OK) {
                 response = postMethod.getResponseBodyAsString();
+                response = new String(response.getBytes("ISO-8859-1"),"UTF-8");
             } else {
                 log.error("响应状态码 = " + postMethod.getStatusCode());
             }

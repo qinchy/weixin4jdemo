@@ -6,11 +6,15 @@ import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
+import org.springframework.stereotype.Component;
 import org.weixin4j.Configuration;
 
+@Component
 public class AccessTokenSchedule {
 
     private Logger log = LoggerFactory.getLogger(AccessTokenSchedule.class);
+
+    public final static long ONE_HOUR = 60 * 60 * 1000;
 
     private static AccessTokenSchedule instance = null;
 
@@ -42,7 +46,7 @@ public class AccessTokenSchedule {
         return this.accessToken;
     }
 
-    @Scheduled(cron = "0 0 0/1 * * ? ")
+    @Scheduled(fixedDelay = ONE_HOUR)
     private void retrieveAccessToken() {
         String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="
                 + Configuration.getProperty("weixin4j.oauth.appid") + "&secret=" + Configuration.getProperty("weixin4j.oauth.secret");
@@ -56,9 +60,5 @@ public class AccessTokenSchedule {
         }
 
         setAccessToken(token);
-    }
-
-    public static void main(String[] args) {
-        System.out.println(AccessTokenSchedule.getInstance().getAccessToken());
     }
 }
