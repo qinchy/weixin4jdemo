@@ -53,12 +53,20 @@ public class AccessTokenSchedule {
 
         String rtnMsg = HttpUtils.get(url, null, "UTF-8");
         JSONObject jsonObject = JSONObject.fromObject(rtnMsg);
-        String token = jsonObject.getString("access_token");
+        if (jsonObject.containsKey("access_token")){
+            String token = jsonObject.getString("access_token");
 
-        if (Configuration.isDebug()) {
-            log.debug("access_token = " + token);
+            if (Configuration.isDebug()) {
+                log.debug("access_token = " + token);
+            }
+
+            setAccessToken(token);
+        }else{
+            if (Configuration.isDebug()) {
+                log.debug("请求错误，未返回access_token");
+                log.debug("返回串："+rtnMsg);
+            }
         }
 
-        setAccessToken(token);
     }
 }
