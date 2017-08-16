@@ -9,15 +9,13 @@ import org.weixin4j.WeixinException;
 import org.weixin4j.http.HttpsClient;
 import org.weixin4j.http.Response;
 
-import javax.validation.constraints.NotNull;
-
 public class WeixinRequestUtils {
 
     private static Logger log = LoggerFactory.getLogger(WeixinRequestUtils.class);
 
-    public static String request(@NotNull WeixinUrlEnum.Menu menu, String body, String dataType) {
-        String method = menu.getMethod();
-        String url = menu.getUrl();
+    public static String request(WeixinUrlEnum urlEnum, String body, String dataType) {
+        String method = urlEnum.getMethod();
+        String url = urlEnum.getUrl();
         String accessToken = AccessTokenSchedule.getInstance().getAccessToken();
         url = url.replace("{ACCESS_TOKEN}", accessToken);
 

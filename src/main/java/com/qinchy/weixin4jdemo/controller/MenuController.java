@@ -18,7 +18,7 @@ public class MenuController {
 
     @RequestMapping(path = "/get", method = RequestMethod.GET)
     public String get() {
-        return WeixinRequestUtils.request(WeixinUrlEnum.Menu.GET, null,"JSON");
+        return WeixinRequestUtils.request(WeixinUrlEnum.MENU_GET, null,"JSON");
     }
 
     @RequestMapping(path = "/create", method = RequestMethod.POST)
@@ -33,11 +33,11 @@ public class MenuController {
             log.error("菜单文本不是合法的json串", e);
         }
 
-        return WeixinRequestUtils.request(WeixinUrlEnum.Menu.CREATE, body, "JSON");
+        return WeixinRequestUtils.request(WeixinUrlEnum.MENU_CREATE, body, "JSON");
     }
 
     @RequestMapping(path = "/delete", method = RequestMethod.GET)
     public String delete() {
-        return WeixinRequestUtils.request(WeixinUrlEnum.Menu.DELETE, null, "JSON");
+        return WeixinRequestUtils.request(WeixinUrlEnum.MENU_DELETE, null, "JSON");
     }
 }
