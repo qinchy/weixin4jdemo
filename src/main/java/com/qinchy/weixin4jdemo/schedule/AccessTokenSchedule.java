@@ -55,6 +55,8 @@ public class AccessTokenSchedule {
         HttpsClient client = new HttpsClient();
         try {
             String rtnMsg = client.get(url).asString();
+            log.info("access_token请求返回串：" + rtnMsg);
+
             JSONObject jsonObject = JSONObject.fromObject(rtnMsg);
             if (jsonObject.containsKey("access_token")) {
                 String token = jsonObject.getString("access_token");
@@ -67,7 +69,6 @@ public class AccessTokenSchedule {
             } else {
                 if (Configuration.isDebug()) {
                     log.debug("请求错误，未返回access_token");
-                    log.debug("返回串：" + rtnMsg);
                 }
             }
         } catch (WeixinException e) {
