@@ -38,6 +38,11 @@ public enum WeixinUrlEnum {
      */
     CARD_CREATE("POST","https://api.weixin.qq.com/card/create?access_token={ACCESS_TOKEN}"),
     QRCODE_CREATE("POST","https://api.weixin.qq.com/card/qrcode/create?access_token={ACCESS_TOKEN}"),
+
+    /**
+     * 素材
+     */
+    MATERIAL_ADDNEWS("POST","https://api.weixin.qq.com/cgi-bin/material/add_news?access_token={ACCESS_TOKEN}"),
     ;
 
     private String method;
