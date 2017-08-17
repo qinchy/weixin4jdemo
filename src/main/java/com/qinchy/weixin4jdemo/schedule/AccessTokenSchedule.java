@@ -1,6 +1,5 @@
 package com.qinchy.weixin4jdemo.schedule;
 
-import com.qinchy.weixin4jdemo.common.HttpUtils;
 import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -8,6 +7,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 import org.weixin4j.Configuration;
+import org.weixin4j.WeixinException;
+import org.weixin4j.http.HttpsClient;
 
 @Component
 public class AccessTokenSchedule {
@@ -51,22 +52,28 @@ public class AccessTokenSchedule {
         String url = "https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid="
                 + Configuration.getProperty("weixin4j.oauth.appid") + "&secret=" + Configuration.getProperty("weixin4j.oauth.secret");
 
-        String rtnMsg = HttpUtils.get(url, null, "UTF-8");
-        JSONObject jsonObject = JSONObject.fromObject(rtnMsg);
-        if (jsonObject.containsKey("access_token")){
-            String token = jsonObject.getString("access_token");
+        HttpsClient client = new HttpsClient();
+        try {
+            String rtnMsg = client.get(url).asString();
+            JSONObject jsonObject = JSONObject.fromObject(rtnMsg);
+            if (jsonObject.containsKey("access_token")) {
+                String token = jsonObject.getString("access_token");
 
-            if (Configuration.isDebug()) {
-                log.debug("access_token = " + token);
-            }
+                if (Configuration.isDebug()) {
+                    log.debug("access_token = " + token);
+                }
 
-            setAccessToken(token);
-        }else{
-            if (Configuration.isDebug()) {
-                log.debug("请求错误，未返回access_token");
-                log.debug("返回串："+rtnMsg);
+                setAccessToken(token);
+            } else {
+                if (Configuration.isDebug()) {
+                    log.debug("请求错误，未返回access_token");
+                    log.debug("返回串：" + rtnMsg);
+                }
             }
+        } catch (WeixinException e) {
+            log.error("获取access_token的schedule报错", e);
         }
+
 
     }
 }

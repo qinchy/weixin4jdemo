@@ -33,6 +33,11 @@ public enum WeixinUrlEnum {
      */
     KEFU_SEND("POST","https://api.weixin.qq.com/cgi-bin/message/custom/send?access_token={ACCESS_TOKEN}"),
 
+    /**
+     * 卡券
+     */
+    CARD_CREATE("POST","https://api.weixin.qq.com/card/create?access_token={ACCESS_TOKEN}"),
+    QRCODE_CREATE("POST","https://api.weixin.qq.com/card/qrcode/create?access_token={ACCESS_TOKEN}"),
     ;
 
     private String method;
