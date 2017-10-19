@@ -61,7 +61,7 @@
         <dependency>
             <groupId>org.weixin4j</groupId>
             <artifactId>weixin4j</artifactId>
-            <version>0.0.7</version>
+            <version>0.0.9.2</version>
         </dependency>
 
         <dependency>
