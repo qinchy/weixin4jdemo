@@ -1,8 +1,8 @@
 package com.qinchy.weixin4jdemo.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.qinchy.weixin4jdemo.common.WeixinRequestUtils;
 import com.qinchy.weixin4jdemo.common.WeixinUrlEnum;
-import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -23,7 +23,7 @@ public class KefuController {
         }
 
         try{
-            JSONObject.fromObject(body);
+            JSONObject.parseObject(body);
         }catch (Exception e){
             log.error("客服消息体不是合法的json串", e);
             return "客服消息体不是合法的json串";
@@ -39,7 +39,7 @@ public class KefuController {
         }
 
         try{
-            JSONObject.fromObject(body);
+            JSONObject.parseObject(body);
         }catch (Exception e){
             log.error("客服消息体不是合法的json串", e);
             return "客服消息体不是合法的json串";
@@ -55,7 +55,7 @@ public class KefuController {
         }
 
         try{
-            JSONObject.fromObject(body);
+            JSONObject.parseObject(body);
         }catch (Exception e){
             log.error("客服消息体不是合法的json串", e);
             return "客服消息体不是合法的json串";

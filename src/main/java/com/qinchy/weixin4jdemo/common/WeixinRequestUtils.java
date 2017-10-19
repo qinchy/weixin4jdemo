@@ -1,7 +1,7 @@
 package com.qinchy.weixin4jdemo.common;
 
+import com.alibaba.fastjson.JSONObject;
 import com.qinchy.weixin4jdemo.schedule.AccessTokenSchedule;
-import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -33,7 +33,7 @@ public class WeixinRequestUtils {
         try {
             if (StringUtils.equalsIgnoreCase("post", method)) {
                 if (StringUtils.equalsIgnoreCase("JSON", dataType)) {
-                    Response response = client.post(url, JSONObject.fromObject(body));
+                    Response response = client.post(url, JSONObject.parseObject(body));
                     result = response.asString();
                 } else if (StringUtils.equalsIgnoreCase("XML", dataType)) {
                     Response response = client.postXml(url, body);

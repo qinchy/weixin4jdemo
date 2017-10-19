@@ -1,8 +1,8 @@
 package com.qinchy.weixin4jdemo.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.qinchy.weixin4jdemo.common.WeixinRequestUtils;
 import com.qinchy.weixin4jdemo.common.WeixinUrlEnum;
-import net.sf.json.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -28,7 +28,7 @@ public class MenuController {
         }
 
         try{
-            JSONObject.fromObject(body);
+            JSONObject.parseObject(body);
         }catch (Exception e){
             log.error("菜单文本不是合法的json串", e);
         }

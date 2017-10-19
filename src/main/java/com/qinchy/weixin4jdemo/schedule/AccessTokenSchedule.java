@@ -1,6 +1,7 @@
 package com.qinchy.weixin4jdemo.schedule;
 
-import net.sf.json.JSONObject;
+
+import com.alibaba.fastjson.JSONObject;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -57,7 +58,7 @@ public class AccessTokenSchedule {
             String rtnMsg = client.get(url).asString();
             log.info("access_token请求返回串：" + rtnMsg);
 
-            JSONObject jsonObject = JSONObject.fromObject(rtnMsg);
+            JSONObject jsonObject = JSONObject.parseObject(rtnMsg);
             if (jsonObject.containsKey("access_token")) {
                 String token = jsonObject.getString("access_token");
 
