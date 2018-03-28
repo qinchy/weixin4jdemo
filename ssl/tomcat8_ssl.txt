@@ -1,0 +1,28 @@
+1.为服务器生成证书,keystore密码tomcat
+keytool -genkey -v -alias tomcat -keyalg RSA -keystore D:\tomcat.keystore -validity 36500
+
+2.为客户端生成证书,keystore密码client
+keytool -genkey -v -alias client -keyalg RSA -storetype PKCS12 -keystore D:\client.p12
+
+3.让服务器信任客户端证书
+keytool -export -alias client -keystore D:\client.p12 -storetype PKCS12 -storepass client -rfc -file D:\clientforserver.cer   
+
+4.将客户端证书导入到服务器的证书库
+keytool -import -v -file D:\clientforserver.cer -keystore D:\tomcat.keystore 
+
+5.让客户端信任服务器证书
+keytool -keystore D:\tomcat.keystore -export -alias tomcat -file D:\serverforclient.cer 
+
+6.服务器tomcat的配置
+(1)打开Tomcat根目录下的/conf/server.xml，找到Connector port="8443"配置段，修改为如下：
+    <Connector port="8443" protocol="org.apache.coyote.http11.Http11NioProtocol"
+               maxThreads="150" SSLEnabled="true" scheme="https" secure="true"
+               keystoreFile="conf/tomcat.keystore" keystorePass="tomcat"
+               clientAuth="false" sslProtocol="TLS">
+		<!--	   
+        <SSLHostConfig>
+            <Certificate certificateKeystoreFile="conf/localhost-rsa.jks"
+                         type="RSA" />
+        </SSLHostConfig>
+		-->
+    </Connector>
