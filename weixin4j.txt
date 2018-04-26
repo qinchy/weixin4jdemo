@@ -1,0 +1,84 @@
+﻿http://localhost:8080/weixin4jdemo/WechatServlet?signature=f15ceda3a2148a79c784b9f721507670a497a3e9&timestamp=12&nonce=111&echostr=qinchy
+
+http://localhost:8080/weixin4jdemo/WechatServlet?signature=d568527f8a7e47e04ba7fb710c2935450605f5c5&echostr=15547180043334151165&timestamp=1502178076&nonce=2363016929
+
+?
+signature=f15ceda3a2148a79c784b9f721507670a497a3e9
+timestamp=12
+nonce=111
+echostr=qinchy
+
+rv5EVfYkklUICYb_lHmUBOY5T3fcfuK9G4TuTeZUccJfuCq-BRFhv9mEii9o33xV24JS9MSbdsWxe0CG7FXrywxQadqZhsZRQuYzykzgIGuiRpqNA0topy_sI1bbtsKEHOGcAIALSK
+
+https://mp.weixin.qq.com/cgi-bin/singlesendpage?tofakeid=oipbZwmSAo1Fs_NIOA8D2adIKaL0&f=json&action=sync&lastmsgfromfakeid=3269039754&lastmsgid=438701289&createtime=1502182536&token=1802835584&lang=zh_CN&token=1802835584&lang=zh_CN&f=json&ajax=1&random=0.8969975965626509
+
+https://mp.weixin.qq.com/cgi-bin/singlesendpage?tofakeid=oipbZwmSAo1Fs_NIOA8D2adIKaL0&f=json&action=sync&lastmsgfromfakeid=3269039754&lastmsgid=438702446&createtime=1502185453&token=1802835584&lang=zh_CN&token=1802835584&lang=zh_CN&f=json&ajax=1&random=0.591658903696642
+
+http://106.14.194.76:8080/weixin4jdemo/WechatServlet
+
+{
+    "button": [
+        {
+            "name": "基础支持", 
+            "sub_button": [
+                {
+                    "type": "click", 
+                    "name": "获取access_token", 
+                    "key": "getAccessToken", 
+                    "sub_button": [ ]
+                }, 
+                {
+                    "type": "view", 
+                    "name": "搜索", 
+                    "url": "http://www.soso.com/", 
+                    "sub_button": [ ]
+                }, 
+                {
+                    "name": "发送位置", 
+                    "type": "location_select", 
+                    "key": "rselfmenu_2_0"
+                }
+            ]
+        }, 
+        {
+            "name": "扫码", 
+            "sub_button": [
+                {
+                    "type": "scancode_waitmsg", 
+                    "name": "扫码带提示", 
+                    "key": "rselfmenu_0_0", 
+                    "sub_button": [ ]
+                }, 
+                {
+                    "type": "scancode_push", 
+                    "name": "扫码推事件", 
+                    "key": "rselfmenu_0_1", 
+                    "sub_button": [ ]
+                }
+            ]
+        }, 
+        {
+            "name": "发图", 
+            "sub_button": [
+                {
+                    "type": "pic_sysphoto", 
+                    "name": "系统拍照发图", 
+                    "key": "rselfmenu_1_0", 
+                    "sub_button": [ ]
+                }, 
+                {
+                    "type": "pic_photo_or_album", 
+                    "name": "拍照或者相册发图", 
+                    "key": "rselfmenu_1_1", 
+                    "sub_button": [ ]
+                }, 
+                {
+                    "type": "pic_weixin", 
+                    "name": "微信相册发图", 
+                    "key": "rselfmenu_1_2", 
+                    "sub_button": [ ]
+                }
+            ]
+        }
+    ]
+}
